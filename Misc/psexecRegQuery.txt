@@ -1,0 +1,16 @@
+Use this on a domain controller to query (some) autorun registry locations. 
+hosts.txt is a file with all hosts (one per line)
+
+psexec.exe @hosts.txt reg query <INSERT REG KEY HERE>
+
+HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
+HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce
+HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+
+For 32 bit malware on 64 bit system
+HKCU\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Run
+HKCU\Software\Wow6432Node\\Microsoft\Windows\CurrentVersion\RunOnce
+HKLM\Software\Wow6432Node\\Microsoft\Windows\CurrentVersion\Run
+HKLM\Software\Wow6432Node\\Microsoft\Windows\CurrentVersion\RunOnce

@@ -1,0 +1,23 @@
+#pragma namespace ("\\\\.\\root\\subscription")
+
+instance of CommandLineEventConsumer as $ConsStart
+{
+	Name = "ProcExpStart";
+	CommandLineTemplate = "{c:\\windows\\system32\\cmd.exe}";
+	
+};
+
+instance of __EventFilter as $FiltStart
+{
+	Name = "StartFilterProcess";
+	Query = "Select * from Win32_LocalTime WHERE Second = 00 ";
+	QueryLanguage = "WQL";
+	EventNameSpace = "root\\cimv2";
+	
+};
+
+instance of __FilterToConsumerBinding 
+{
+	Filter = $FiltStart;
+	Consumer = $ConsStart;
+};
