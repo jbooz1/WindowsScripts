@@ -1,0 +1,1 @@
+foreach($zone in (get-dnsserverzone)){remove-dnsserverzone -Name $zone.zonename}

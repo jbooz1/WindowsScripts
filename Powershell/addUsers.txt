@@ -1,0 +1,4 @@
+import-module activedirectory
+import-csv /path/to/csv/ | foreach-object{
+	new-aduser -name $_.first_name -samaccountname $_.account_name -accountPassword (ConvertTo-SecureString $_.Password -asplaintext -force) -enabled $true -PasswordNeverExpires $true -passthru
+	}
