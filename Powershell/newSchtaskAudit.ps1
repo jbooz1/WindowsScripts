@@ -1,4 +1,4 @@
-﻿# Audit each system in the domain for registry changes
+﻿# Audit each system in domain for new scheduled tasks that were created in the last x time
 
 param(
 	[int]$hour = 3
@@ -8,12 +8,12 @@ param(
 foreach($system in Get-AdComputer -Filter *){
     $computername = $system.name
     $currenttime = Get-Date
-    $hoursago = $currenttime.AddHours(0-$hoursago)  # add negative hours here to go back in time
+    $hoursago = $currenttime.AddHours(0-$hours)
 
-    # Query event log for event ID 4657, registry change
+    # Query event log for event ID 4698, new scheduled task
     Get-WinEvent -ComputerName $computername -FilterHashtable @{`
                             logname='Security';
-                            id=4657;
+                            id=4698;
                             StartTime=$hoursago} -ErrorAction SilentlyContinue `
                              | Format-List
 }

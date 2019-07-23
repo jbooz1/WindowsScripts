@@ -1,4 +1,7 @@
-// This file is a MOF file that uses an EventFilter, CommandLineEventConsumer and FilterToConsumerBinding to fire off a cmd every minute
+// This MOF File will trigger a command line template every time a filter catches something.
+// The filter here will look for a process with a certain name to StartFilterProcess
+// Some generic payload.bat file is listed as the consumer
+
 
 // define the namespace that this subscription should live in. This is a popular spot
 #pragma namespace ("\\\\.\\root\\subscription")
@@ -7,15 +10,17 @@
 instance of CommandLineEventConsumer as $ConsStart
 {
 	Name = "ProcExpStart";
-	CommandLineTemplate = "{c:\\windows\\system32\\cmd.exe}";
+	CommandLineTemplate = "{c:\\windows\\system32\\payload.bat}";
 	
 };
 
-// WQL Event Filter that fires every time the seconds equals 0
+// Event Filter that looks for a process that contains 'procexp'
+// This can be used to look for process that have started.
+// So, if you want to kill a program every time it starts up, this could be a way to do that
 instance of __EventFilter as $FiltStart
 {
 	Name = "StartFilterProcess";
-	Query = "Select * from Win32_LocalTime WHERE Second = 00 ";
+	Query = "SELECT * FROM Win32_ProcessTrace WHERE ProcessName LIKE \"%procexp%\"";
 	QueryLanguage = "WQL";
 	EventNameSpace = "root\\cimv2";
 	
